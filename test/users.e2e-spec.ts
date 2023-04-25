@@ -19,12 +19,12 @@ describe('AppController (e2e)', () => {
   });
 
   beforeAll(async () => {
-    // seed test database
+    // TODO seed test database
   });
 
   afterAll(async () => {
-    // create test user
-    // truncate test database
+    // TODO create test user
+    // TODO truncate test database
   });
 
   it('/ (POST)  Create User', async () => {
