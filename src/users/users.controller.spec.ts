@@ -119,9 +119,6 @@ describe('UsersController', () => {
       };
 
       jest.spyOn(prismaService.user, 'findFirst').mockResolvedValue(null);
-      // jest
-      //   .spyOn(prismaService.user, 'create')
-      //   .mockResolvedValue(createUserBody);
 
       const result = await controller.store(createUserBody);
 
