@@ -11,17 +11,13 @@ import {
 
 import { PrismaService } from '../config/database/prisma.service';
 import CreateUserBody from './create-user-body';
-import { PrismaUsersRepository } from './prisma.users.repository';
 import { cleanStringDigits } from 'src/utils/clean-string';
 import { Paginated } from 'src/utils/paginated';
 import { User } from '@prisma/client';
 
 @Controller('users')
 export class UsersController {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly prismaUserRepository: PrismaUsersRepository,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   @Get('')
   async index(
