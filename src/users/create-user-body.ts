@@ -7,7 +7,6 @@ import {
   Validate,
 } from 'class-validator';
 import { CPFValidator } from 'src/validator/cpf.validator';
-// import { CPFValidator } from 'src/validator/cpf.validator';
 
 export default class CreateUserBody {
   @ApiProperty({

@@ -3,6 +3,8 @@ import { cleanStringDigits } from 'src/utils/clean-string';
 export function validateCPF(cpf: string): boolean {
   cpf = cleanStringDigits(cpf);
 
+  console.log(cpf);
+
   if (cpf.length !== 11) {
     return false;
   }

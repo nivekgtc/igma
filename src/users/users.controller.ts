@@ -14,11 +14,23 @@ import CreateUserBody from './create-user-body';
 import { cleanStringDigits } from 'src/utils/clean-string';
 import { Paginated } from 'src/utils/paginated';
 import { User } from '@prisma/client';
+import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('igma')
 @Controller('users')
 export class UsersController {
   constructor(private readonly prisma: PrismaService) {}
 
+  @ApiQuery({
+    name: 'page',
+    example: 1,
+    required: false,
+  })
+  @ApiQuery({
+    name: 'limit',
+    example: 10,
+    required: false,
+  })
   @Get('')
   async index(
     @Query('page') page,
@@ -26,12 +38,12 @@ export class UsersController {
   ): Promise<Paginated<User>> {
     if (!page) page = 1;
 
-    const skip = (page - 1) * limit;
+    const skip = (page - 1) * Number(limit);
 
     const [data, totalItems] = await Promise.all([
       this.prisma.user.findMany({
         skip,
-        take: limit,
+        take: Number(limit),
       }),
       this.prisma.user.count(),
     ]);
@@ -44,6 +56,7 @@ export class UsersController {
     };
   }
 
+  @ApiParam({ name: 'document', example: '24560257760' })
   @Get('/:document')
   async find(@Param('document') document) {
     const parsedDocument = cleanStringDigits(document);
@@ -60,7 +73,7 @@ export class UsersController {
   @Post('')
   async store(@Body() user: CreateUserBody) {
     const userAlreadyExists = await this.prisma.user.findFirst({
-      where: { document: user.document },
+      where: { document: cleanStringDigits(user.document) },
     });
 
     if (userAlreadyExists) {
@@ -68,7 +81,7 @@ export class UsersController {
     }
 
     return this.prisma.user.create({
-      data: user,
+      data: { ...user, document: cleanStringDigits(user.document) },
     });
   }
 }
