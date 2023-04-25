@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// datasource db {
+//   provider = "sqlite"
+//   url      = env("DATABASE_URL")
+// }
+
+// generator client {
+//   provider = "prisma-client-js"
+// }
+// DATABASE_URL="file:./dev.db"
+
+model User {
+  @@map("users")
+
+  id String @id @default(uuid())
+  name String @db.VarChar()
+  document String @unique()
+  birthdate DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
