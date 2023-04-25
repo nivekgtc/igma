@@ -4,6 +4,7 @@ import { PrismaService } from 'src/config/database/prisma.service';
 import { PrismaUsersRepository } from './prisma.users.repository';
 import { PrismaClient } from '@prisma/client';
 
+import { faker } from '@faker-js/faker';
 import fakerBr from 'faker-br';
 
 import { randomUUID } from 'crypto';
@@ -48,7 +49,7 @@ describe('UsersController', () => {
     it('should return a paginated list of users ', async () => {
       const fakeUserOne = {
         id: randomUUID(),
-        name: 'Fake name',
+        name: faker.name.fullName(),
         document: fakerBr.br.cpf(),
         birthdate: new Date(),
         createdAt: new Date(),
@@ -57,7 +58,7 @@ describe('UsersController', () => {
 
       const fakeUserTwo = {
         id: randomUUID(),
-        name: 'Fake nam2',
+        name: faker.name.fullName(),
         document: fakerBr.br.cpf(),
         birthdate: new Date(),
         createdAt: new Date(),
@@ -87,7 +88,7 @@ describe('UsersController', () => {
     it('should return a user by document idenfication', async () => {
       const expectedResponse = {
         id: randomUUID(),
-        name: 'Fake name',
+        name: faker.name.fullName(),
         document: fakerBr.br.cpf(),
         birthdate: new Date(),
         createdAt: new Date(),
@@ -113,7 +114,7 @@ describe('UsersController', () => {
   describe('store', () => {
     it('should create a new user', async () => {
       const createUserBody: CreateUserBody = {
-        name: 'Fake name',
+        name: faker.name.fullName(),
         document: fakerBr.br.cpf(),
         birthdate: new Date(),
       };
@@ -130,7 +131,7 @@ describe('UsersController', () => {
 
       try {
         await controller.store({
-          name: 'John Doe',
+          name: faker.name.fullName(),
           document: '12345678901',
           birthdate: new Date(),
         });
